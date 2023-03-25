@@ -27,7 +27,7 @@ print(greatestNumber(a))
 # Question improved/answer
 def greatestNumberImproved(array):
     steps = 0
-    greatestVal = float('-inf')
+    greatestVal = array[0]
 
     for i in array:
         steps += 1
