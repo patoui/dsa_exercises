@@ -1,28 +1,17 @@
 <?php
 
 function arr_intersect(array $a, array $b) {
-	$largeArray = [];
-	$smallArray = [];
-
-	if (count($a) > count($b)) {
-		$largeArray = $a;
-		$smallArray = $b;
-	} else {
-		$largeArray = $b;
-		$smallArray = $a;
-	}
-
 	$hashMap = [];
 
-	foreach ($largeArray as $lVal) {
-		$hashMap[$lVal] = true;
+	foreach ($a as $aVal) {
+		$hashMap[$aVal] = true;
 	}
 
 	$intersection = [];
 
-	foreach ($smallArray as $sVal) {
-		if ($hashMap[$sVal] ?? false) {
-			$intersection[] = $sVal;
+	foreach ($b as $bVal) {
+		if ($hashMap[$bVal] ?? false) {
+			$intersection[] = $bVal;
 		}
 	}
 
