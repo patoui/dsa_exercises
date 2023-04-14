@@ -9,3 +9,5 @@ function letterCount(array $strings): int {
 }
 
 var_dump(letterCount(['ab','c','def','ghji']));
+
+// correct

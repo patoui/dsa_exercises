@@ -10,6 +10,7 @@
  * return 28.
  */
 
+// tail recursion
 function triangleNumber($n, $l = 0) {
 	if ($n === 1) {
 		return 1;
@@ -20,4 +21,17 @@ function triangleNumber($n, $l = 0) {
 	return $n + $l;
 }
 
-echo 'RESULT: ' . json_encode(triangleNumber(7)) . PHP_EOL;
+// correct
+
+// traditional recursion
+function triangleNumberAlt($n) {
+	if ($n === 1) {
+		return 1;
+	}
+
+	return $n + triangleNumberAlt($n-1);
+}
+
+echo 'RESULT: ' . triangleNumber(7) . PHP_EOL;
+echo 'RESULT: ' . triangleNumberAlt(7) . PHP_EOL;
+

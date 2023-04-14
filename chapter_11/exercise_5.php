@@ -2,7 +2,7 @@
 
 // resources: https://indepthjavascript.dev/how-to-solve-the-unique-paths-leetcode-problem-with-javascript-and-recursion
 
-function shortestPaths(int $rows, int $columns, int $columnIndex = 0, int $rowIndex = 0): int {
+function uniquePaths(int $rows, int $columns, int $columnIndex = 0, int $rowIndex = 0): int {
 	$atEndOfRow = ($columns - 1) === $rowIndex;
 	$atEndOfColumn = ($rows - 1) === $columnIndex;
 
@@ -11,21 +11,32 @@ function shortestPaths(int $rows, int $columns, int $columnIndex = 0, int $rowIn
 	}
 
 	if ($atEndOfRow && !$atEndOfColumn) {
-		return shortestPaths($rows, $columns, $columnIndex + 1, $rowIndex);
+		return uniquePaths($rows, $columns, $columnIndex + 1, $rowIndex);
 	}
 
 	if (!$atEndOfRow && $atEndOfColumn) {
-		return shortestPaths($rows, $columns, $columnIndex, $rowIndex + 1);
+		return uniquePaths($rows, $columns, $columnIndex, $rowIndex + 1);
 	}
 
 	// has not reached the end of the column, find shortest paths while incrementing row index
-	$columnIndexPaths = shortestPaths($rows, $columns, $columnIndex + 1, $rowIndex);
+	$columnIndexPaths = uniquePaths($rows, $columns, $columnIndex + 1, $rowIndex);
 
 	// has not reached the end of the row, find shortest paths while incrementing column index
-	$rowIndexPaths = shortestPaths($rows, $columns, $columnIndex, $rowIndex + 1);
+	$rowIndexPaths = uniquePaths($rows, $columns, $columnIndex, $rowIndex + 1);
 
 	return $columnIndexPaths + $rowIndexPaths;
 }
 
-var_dump(shortestPaths(3,7));
+
+// alt solution
+function uniquePathsAlt(int $rows, int $columns): int {
+	if ($rows === 1 || $columns === 1) {
+		return 1;
+	}
+
+	return uniquePathsAlt($rows - 1, $columns) + uniquePathsAlt($rows, $columns - 1);
+}
+
+var_dump(uniquePaths(3,7));
+var_dump(uniquePathsAlt(3,7));
 
