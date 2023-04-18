@@ -37,6 +37,12 @@ class LinkedList
 		}
 	}
 
+	public function deleteNodeAlt(Node $node): void
+	{
+		$node->value = $node->next_node->value;
+		$node->next_node = $node->next_node->next_node;
+	}
+
 	public function printAll(): void
 	{
 		$current_node = $this->first_node;
@@ -61,12 +67,13 @@ $node3->next_node = $node4;
 $node4->next_node = $node5;
 
 $linkedList = new LinkedList($node1);
-echo 'PRE SORT' . PHP_EOL;
+echo 'PRE DELETE' . PHP_EOL;
 $linkedList->printAll();
 
 // delete node
-$linkedList->deleteNode($node3);
+// $linkedList->deleteNode($node3);
+$linkedList->deleteNodeAlt($node3);
 
-echo 'POST SORT' . PHP_EOL;
+echo 'POST DELETE' . PHP_EOL;
 $linkedList->printAll();
 
