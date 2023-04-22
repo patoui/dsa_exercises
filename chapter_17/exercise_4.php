@@ -77,6 +77,27 @@ class Trie
 
 		return $this->collectAllWords($currentNode, $validInput);
 	}
+
+	public function autocorrectAlt(string $word): string
+	{
+		$currentNode = $this->root;
+		$wordFoundSoFar = '';
+
+		for ($i = 0; $i < strlen($word); $i++) {
+			$char = $word[$i];
+
+			if (isset($currentNode->children[$char])) {
+				$wordFoundSoFar .= $char;
+				$currentNode = $currentNode->children[$char];
+			} else {
+				return $wordFoundSoFar
+					. $this->collectAllWords($currentNode)[0];
+
+			}
+		}
+
+		return $word;
+	}
 }
 
 $trie = new Trie();
@@ -88,4 +109,10 @@ $trie->insert('catnip');
 var_dump($trie->autocorrect('x'));
 var_dump($trie->autocorrect('cat'));
 var_dump($trie->autocorrect('caxasfdij'));
+var_dump($trie->autocorrect('catn'));
+
+var_dump($trie->autocorrectAlt('x'));
+var_dump($trie->autocorrectAlt('cat'));
+var_dump($trie->autocorrectAlt('caxasfdij'));
+var_dump($trie->autocorrectAlt('catn'));
 
