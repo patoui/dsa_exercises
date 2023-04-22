@@ -16,6 +16,18 @@ class Trie
 		}
 	}
 
+	public function traverse(TrieNode $node = null): void
+	{
+		$currentNode = $node ?? $this->root;
+
+		foreach ($currentNode->children as $key => $childNode) {
+			echo $key;
+			if ($key !== '*') {
+				$this->traverse($childNode);
+			}
+		}
+	}
+
 	public function collectAllWords(
 		TrieNode $node = null,
 		string $word = '',
@@ -64,5 +76,5 @@ $trie->insert('act');
 $trie->insert('we');
 $trie->insert('well');
 $trie->insert('went');
-$trie->printAll();
+$trie->traverse();
 
