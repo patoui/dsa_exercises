@@ -14,6 +14,9 @@ class Queue
 
 	public function dequeue(): mixed
 	{
+		if (!isset($this->items[$this->head])) {
+			return null;
+		}
 		$item = $this->items[$this->head];
 		unset($this->items[$this->head]);
 		$this->head++;
@@ -38,13 +41,12 @@ class Person
 function shortestConnection(Person $start, Person $relation) {
 	// used to prevent revisiting relations
 	$visited_relations = [];
+	$visited_relations[$start->name] = true;
 
 	$queue = new Queue();
 
 	$distance_map = [];
-	$distance_weighed_map = [];
 
-	$distance_map[$start->name] = 0;
 	$current_person = $start;
 
 	while ($current_person) {
@@ -53,20 +55,13 @@ function shortestConnection(Person $start, Person $relation) {
 			break;
 		}
 
-		$distance_through_current_person = ($distance_map[$current_person->name] ?? 0) + 1;
-
 		foreach ($current_person->neighbours as $person) {
 			if (!isset($visited_relations[$person->name])) {
 				$visited_relations[$person->name] = true;
-				$queue->enqueue($person);
-			}
 
-			if (
-				!isset($distance_map[$person->name])
-				|| $distance_through_current_person < $distance_map[$person->name]
-			) {
-				$distance_map[$person->name] = $distance_through_current_person;
-				$distance_weighed_map[$person->name] = $current_person->name;
+				$queue->enqueue($person);
+
+				$distance_map[$person->name] = $current_person->name;
 			}
 		}
 
@@ -74,19 +69,16 @@ function shortestConnection(Person $start, Person $relation) {
 	}
 
 	$shortest_distance = [];
-
 	$current_person_name = $relation->name;
 
 	while ($current_person_name !== $start->name) {
 		$shortest_distance[] = $current_person_name;
-		$current_person_name = $distance_weighed_map[$current_person_name];
+		$current_person_name = $distance_map[$current_person_name];
 	}
 
 	$shortest_distance[] = $start->name;
 
-	$shortest_distance = array_reverse($shortest_distance);
-
-	return $shortest_distance;
+	return array_reverse($shortest_distance);
 }
 
 $idris = new Person('idris');
@@ -100,14 +92,19 @@ $sasha = new Person('sasha');
 $idris->addNeighbour($kamil);
 $idris->addNeighbour($talia);
 
+$kamil->addNeighbour($idris);
 $kamil->addNeighbour($lina);
 
+$talia->addNeighbour($idris);
 $talia->addNeighbour($ken);
 
+$lina->addNeighbour($kamil);
 $lina->addNeighbour($sasha);
 
+$ken->addNeighbour($talia);
 $ken->addNeighbour($marco);
 
+$marco->addNeighbour($ken);
 $marco->addNeighbour($sasha);
 
 $sasha->addNeighbour($marco);
