@@ -15,5 +15,16 @@ function reverse(array $data): array {
         return $data;
 }
 
+function reverseAlt(array $data): array {
+        for ($i = 0; $i < count($data) / 2; $i++) {
+                $temp = $data[count($data) - 1 - $i];
+                $data[count($data) - 1 - $i] = $data[$i];
+                $data[$i] = $temp;
+        }
+
+        return $data;
+}
+
 print_r(reverse([1,2,3,4,5,6,7]));
+print_r(reverseAlt([1,2,3,4,5,6,7]));
 
