@@ -34,5 +34,35 @@ function sortTemperatures(array $temps): array
         return $sorted;
 }
 
+function sortTemperaturesAlt(array $temps): array
+{
+        $map = [];
+
+        foreach ($temps as $temp) {
+                $whole_temp = $temp * 10;
+                if (!isset($map[$whole_temp])) {
+                        $map[$whole_temp] = 1;
+                } else {
+                        $map[$whole_temp]++;
+                }
+        }
+
+        $sorted = [];
+        $temparature = 970;
+
+        while ($temparature <= 990) {
+                if (isset($map[$temparature])) {
+                        for ($i = 0; $i < $map[$temparature]; $i++) {
+                                $sorted[] = $temparature / 10;
+                        }
+                }
+
+                $temparature++;
+        }
+
+        return $sorted;
+}
+
 print_r(sortTemperatures([98.6,98.0,97.1,99.0,98.9,97.8,98.5,98.2,98.0,97.1]));
+print_r(sortTemperaturesAlt([98.6,98.0,97.1,99.0,98.9,97.8,98.5,98.2,98.0,97.1]));
 
