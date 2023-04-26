@@ -29,5 +29,24 @@ function maximumStockProfit(array $prices): int
         return $max - $min;
 }
 
+function maximumStockProfitAlt(array $prices): int
+{
+        $buy_price = $prices[0];
+        $greatest_profit = 0;
+
+        foreach ($prices as $price) {
+                $potential_profit = $price - $buy_price;
+
+                if ($price < $buy_price) {
+                        $buy_price = $price;
+                } elseif ($potential_profit > $greatest_profit) {
+                        $greatest_profit = $potential_profit;
+                }
+        }
+
+        return $greatest_profit;
+}
+
 echo maximumStockProfit([10,7,5,8,11,2,6]) . PHP_EOL;
+echo maximumStockProfitAlt([10,7,5,8,11,2,6]) . PHP_EOL;
 
